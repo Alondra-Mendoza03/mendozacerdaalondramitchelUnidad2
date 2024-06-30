@@ -9,7 +9,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <title>PHP CRUD using jquery ajax without page reload</title>
+    <title>Registro Alumnos</title>
 
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 </head>
@@ -20,7 +20,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Agregar Nuevo Estudiante</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form id="saveStudent">
@@ -29,25 +29,25 @@
                 <div id="errorMessage" class="alert alert-warning d-none"></div>
 
                 <div class="mb-3">
-                    <label for="">Name</label>
+                    <label for="">Nombre completo</label>
                     <input type="text" name="name" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label for="">Email</label>
+                    <label for="">Correo electronico</label>
                     <input type="text" name="email" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label for="">Phone</label>
+                    <label for="">Telefono movil</label>
                     <input type="text" name="phone" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label for="">Course</label>
+                    <label for="">Curso</label>
                     <input type="text" name="course" class="form-control" />
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save Student</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Registrar Estudiante</button>
             </div>
         </form>
         </div>
@@ -59,7 +59,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit Student</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Editar</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form id="updateStudent">
@@ -70,25 +70,25 @@
                 <input type="hidden" name="student_id" id="student_id" >
 
                 <div class="mb-3">
-                    <label for="">Name</label>
+                    <label for="">Nombre Completo</label>
                     <input type="text" name="name" id="name" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label for="">Email</label>
+                    <label for="">Correo Electronico</label>
                     <input type="text" name="email" id="email" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label for="">Phone</label>
+                    <label for="">Telefono Movil</label>
                     <input type="text" name="phone" id="phone" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label for="">Course</label>
+                    <label for="">Curso</label>
                     <input type="text" name="course" id="course" class="form-control" />
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Update Student</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Editar</button>
             </div>
         </form>
         </div>
@@ -100,30 +100,30 @@
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">View Student</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Vista</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
             <div class="modal-body">
 
                 <div class="mb-3">
-                    <label for="">Name</label>
+                    <label for="">Nombre Completo</label>
                     <p id="view_name" class="form-control"></p>
                 </div>
                 <div class="mb-3">
-                    <label for="">Email</label>
+                    <label for="">Correo Electronico</label>
                     <p id="view_email" class="form-control"></p>
                 </div>
                 <div class="mb-3">
-                    <label for="">Phone</label>
+                    <label for="">Telefono Movil</label>
                     <p id="view_phone" class="form-control"></p>
                 </div>
                 <div class="mb-3">
-                    <label for="">Course</label>
+                    <label for="">Curso</label>
                     <p id="view_course" class="form-control"></p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
@@ -134,10 +134,10 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>PHP Ajax CRUD without page reload using Bootstrap Modal
+                    <h4>Registro de Alumnos
                         
                         <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#studentAddModal">
-                            Add Student
+                            Agregar estudiante 
                         </button>
                     </h4>
                 </div>
@@ -147,11 +147,11 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Course</th>
-                                <th>Action</th>
+                                <th>Nombre Completo</th>
+                                <th>Correo Electronico</th>
+                                <th>Telefono Movil</th>
+                                <th>Curso</th>
+                                <th>Accion</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -173,9 +173,9 @@
                                         <td><?= $student['phone'] ?></td>
                                         <td><?= $student['course'] ?></td>
                                         <td>
-                                            <button type="button" value="<?=$student['id'];?>" class="viewStudentBtn btn btn-info btn-sm">View</button>
-                                            <button type="button" value="<?=$student['id'];?>" class="editStudentBtn btn btn-success btn-sm">Edit</button>
-                                            <button type="button" value="<?=$student['id'];?>" class="deleteStudentBtn btn btn-danger btn-sm">Delete</button>
+                                            <button type="button" value="<?=$student['id'];?>" class="viewStudentBtn btn btn-info btn-sm">Vista</button>
+                                            <button type="button" value="<?=$student['id'];?>" class="editStudentBtn btn btn-success btn-sm">Editar</button>
+                                            <button type="button" value="<?=$student['id'];?>" class="deleteStudentBtn btn btn-danger btn-sm">Eliminar</button>
                                         </td>
                                     </tr>
                                     <?php
