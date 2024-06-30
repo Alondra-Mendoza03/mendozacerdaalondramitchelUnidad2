@@ -12,6 +12,193 @@
     <title>Registro Alumnos</title>
 
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <style>
+    /* Transición para botones */
+    .btn {
+        transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .btn:hover {
+        transform: scale(1.1);
+    }
+
+    /* Animación para modal */
+    .modal.fade .modal-dialog {
+        -webkit-transform: translate(0, -25%);
+        -moz-transform: translate(0, -25%);
+        -ms-transform: translate(0, -25%);
+        -o-transform: translate(0, -25%);
+        transform: translate(0, -25%);
+        -webkit-transition: -webkit-transform 0.3s ease-out;
+        -moz-transition: -moz-transform 0.3s ease-out;
+        -o-transition: -o-transform 0.3s ease-out;
+        transition: transform 0.3s ease-out;
+    }
+
+    .modal.fade.show .modal-dialog {
+        -webkit-transform: translate(0, 0);
+        -moz-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+        -o-transform: translate(0, 0);
+        transform: translate(0, 0);
+    }
+
+    /* Animación para filas de la tabla */
+    tbody tr {
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    tbody tr:hover {
+        background-color: #f2f2f2;
+        transform: scale(1.02);
+    }
+
+    /* Animación para el mensaje de error */
+    .alert-warning {
+        animation: shake 0.3s;
+    }
+
+    @keyframes shake {
+        0%, 100% {
+            transform: translateX(0);
+        }
+        25% {
+            transform: translateX(-5px);
+        }
+        75% {
+            transform: translateX(5px);
+        }
+    }
+</style>
+<script>
+    // Animación de botones al hacer clic
+    $(document).on('mousedown', '.btn', function () {
+        $(this).css('transform', 'scale(0.9)');
+    });
+
+    $(document).on('mouseup', '.btn', function () {
+        $(this).css('transform', 'scale(1.1)');
+    });
+
+    $(document).on('mouseleave', '.btn', function () {
+        $(this).css('transform', 'scale(1)');
+    });
+
+    // Animación para mostrar mensaje de éxito al guardar o actualizar
+    function showAlertifySuccess(message) {
+        alertify.set('notifier', 'position', 'top-right');
+        alertify.success(message);
+
+        $('.ajs-message.ajs-success').css({
+            'background-color': '#28a745',
+            'border-radius': '10px',
+            'padding': '10px 20px',
+            'box-shadow': '0 0 10px rgba(0, 0, 0, 0.1)'
+        });
+    }
+
+    // Reemplazar alertify.success con showAlertifySuccess
+    $(document).on('submit', '#saveStudent', function (e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        formData.append("save_student", true);
+
+        $.ajax({
+            type: "POST",
+            url: "code.php",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                
+                var res = jQuery.parseJSON(response);
+                if(res.status == 422) {
+                    $('#errorMessage').removeClass('d-none');
+                    $('#errorMessage').text(res.message);
+
+                } else if(res.status == 200) {
+
+                    $('#errorMessage').addClass('d-none');
+                    $('#studentAddModal').modal('hide');
+                    $('#saveStudent')[0].reset();
+
+                    showAlertifySuccess(res.message);
+
+                    $('#myTable').load(location.href + " #myTable");
+
+                } else if(res.status == 500) {
+                    alert(res.message);
+                }
+            }
+        });
+    });
+
+    $(document).on('submit', '#updateStudent', function (e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        formData.append("update_student", true);
+
+        $.ajax({
+            type: "POST",
+            url: "code.php",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                
+                var res = jQuery.parseJSON(response);
+                if(res.status == 422) {
+                    $('#errorMessageUpdate').removeClass('d-none');
+                    $('#errorMessageUpdate').text(res.message);
+
+                } else if(res.status == 200) {
+
+                    $('#errorMessageUpdate').addClass('d-none');
+
+                    showAlertifySuccess(res.message);
+                    
+                    $('#studentEditModal').modal('hide');
+                    $('#updateStudent')[0].reset();
+
+                    $('#myTable').load(location.href + " #myTable");
+
+                } else if(res.status == 500) {
+                    alert(res.message);
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '.deleteStudentBtn', function (e) {
+        e.preventDefault();
+
+        if (confirm('Are you sure you want to delete this data?')) {
+            var student_id = $(this).val();
+            $.ajax({
+                type: "POST",
+                url: "code.php",
+                data: {
+                    'delete_student': true,
+                    'student_id': student_id
+                },
+                success: function (response) {
+
+                    var res = jQuery.parseJSON(response);
+                    if(res.status == 500) {
+                        alert(res.message);
+                    } else {
+                        showAlertifySuccess(res.message);
+
+                        $('#myTable').load(location.href + " #myTable");
+                    }
+                }
+            });
+        }
+    });
+</script>
+
 </head>
 <body>
 
